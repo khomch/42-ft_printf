@@ -6,7 +6,7 @@
 /*   By: ax <ax@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:50:28 by ax                #+#    #+#             */
-/*   Updated: 2024/01/04 20:50:16 by ax               ###   ########.fr       */
+/*   Updated: 2024/01/06 21:09:38 by ax               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int sum(int count, ...)
 	for (i = 0; i < count; i++)
 	{
 		int x = va_arg(args, int);
-		// printf("I: %d, Count: %d, X: %d\n", i, count, x);
+		printf("I: %d, Count: %d, X: %d\n", i, count, x);
 		s += x;
 	}
 	va_end(args);
