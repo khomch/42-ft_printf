@@ -6,14 +6,15 @@
 #    By: ax <ax@student.42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/04 16:56:47 by ax                #+#    #+#              #
-#    Updated: 2024/01/04 17:44:00 by ax               ###   ########.fr        #
+#    Updated: 2024/01/07 19:47:59 by ax               ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = libftprintf.a
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g3
+# CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -g3
 LIBFT = ./libft/libft.a
 AR = ar rcs
 SRC = libftprintf.c
