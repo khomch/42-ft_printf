@@ -6,18 +6,18 @@
 /*   By: ax <ax@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:50:28 by ax                #+#    #+#             */
-/*   Updated: 2024/01/07 20:09:46 by ax               ###   ########.fr       */
+/*   Updated: 2024/01/07 20:24:33 by ax               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_printf.h"
 
-void	ft_putchar(char c)
+void ft_putchar(char c)
 {
-	write (1, &c, 1);
+	write(1, &c, 1);
 }
 
-void	ft_putstr(const char *str)
+void ft_putstr(const char *str)
 {
 	int i;
 
@@ -29,12 +29,12 @@ void	ft_putstr(const char *str)
 	}
 }
 
-int	is_in_charset(char c, char *charset)
+int is_in_charset(char c, char *charset)
 {
-	int	i;
+	int i;
 	char s1[2];
 	char s2[2];
-	
+
 	s1[0] = '%';
 	s2[0] = '%';
 	s2[1] = c;
@@ -49,10 +49,10 @@ int	is_in_charset(char c, char *charset)
 	return (0);
 }
 
-int	count_args(const char *str, char *charset)
+int count_args(const char *str, char *charset)
 {
-	int	count;
-	int	i;
+	int count;
+	int i;
 
 	count = 0;
 	i = 0;
@@ -67,9 +67,9 @@ int	count_args(const char *str, char *charset)
 
 char *create_part_of_str(const char *str, char c, int start, char *charset)
 {
-	int	count;
-	int	i;
-	int	y;
+	int count;
+	int i;
+	int y;
 	char *res;
 
 	count = 0;
@@ -93,11 +93,11 @@ char *create_part_of_str(const char *str, char c, int start, char *charset)
 	return (res);
 }
 
-int	ft_printf(const char *str, ...)
+int ft_printf(const char *str, ...)
 {
 	va_list args;
 	va_start(args, str);
-	int	i;
+	int i;
 	int ptr;
 	int argsQty;
 	char *res;
@@ -113,24 +113,47 @@ int	ft_printf(const char *str, ...)
 	{
 		char arg = va_arg(args, int);
 		temp_str = create_part_of_str(str, arg, ptr, "c");
+		while (str[ptr] && !is_in_charset(str[ptr], "c"))
+		{
+			ptr++;
+		}
+		ptr++;
 		temp_res = ft_strdup(res);
 		res = ft_strjoin(temp_res, temp_str);
+		printf("TEMP STR %s\n", temp_str);
 		free(temp_res);
 		free(temp_str);
-		temp_str = create_part_of_str(str, arg, ptr, "c");
-		printf("TEMP STR %s\n", temp_str);
 		printf("\ni: %d, arg: %c\n", i, arg);
 		i++;
 	}
+	i = 0;
+	int end;
+	end = ptr;
+	while (str[end])
+		end++;
+	while (str[ptr])
+	{
+		temp_str = ft_strdup("");
+		temp_str = (char *)malloc(sizeof(char) * end - ptr + 1);
+		temp_str[i] = str[ptr];
+		i++;
+		ptr++;
+	}
+	temp_str[i] = '\0';
+	temp_res = ft_strdup(res);
+	printf("TEMP STR 1 %s\n", temp_str);
+	res = ft_strjoin(temp_res, temp_str);
+	free(temp_res);
+	free(temp_str);
 	va_end(args);
 	ft_putstr(res);
 	free(res);
 	return (42);
 }
 
-int	main(void)
+int main(void)
 {
-	ft_printf("Hello %c World \n", 'A', 'B', 'C');
+	ft_printf("Hello %c %c World \n", 'A', 'B', 'C');
 	// printf("Hello World\n");
 	// printf("Len: %zu\n", ft_strlen("Hello World!!!"));
 	// printf("Sum function: %d\n", sum(4, 1, 2, 3, 4));
