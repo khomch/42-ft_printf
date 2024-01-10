@@ -65,6 +65,9 @@ int ft_printf(const char *format, ...)
 int main(void)
 {
 	// ft_printf("Hello %s %s %d %% World \n", "ABC", "DEF", 42);
+	char	*ptr;
+
+	printf("\nPointer: %p \n\n", ptr);
 	printf("%s \n", NULL);
 	ft_printf("%s \n", NULL);
 	printf("COUNT M: %d\n\n", ft_printf("Hello %s %s %c %d %% %x %X %u %s World \n", "ABC", "DEF", 'X', 42, 42, 42, 4294967295, ""));
