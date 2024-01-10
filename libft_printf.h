@@ -18,6 +18,9 @@
 # include <stdio.h>
 # include <unistd.h>
 
-int	ft_printf(const char *format, ...);
+int	    ft_printf(const char *format, ...);
+void	ft_putchar_pf(char c, int *counter);
+void    ft_putstr_pf(const char *str, int *counter);
+void    ft_putnbr_pf(int num, int *counter);
 
 #endif

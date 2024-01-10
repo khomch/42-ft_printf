@@ -12,76 +12,54 @@
 
 #include "libft_printf.h"
 
-
-void	ft_putchar(char c)
+static int	ft_putarg(va_list args, char identifier, int *counter)
 {
-	write(1, &c, 1);
+	if (identifier == 'c')
+		ft_putchar_pf(va_arg(args, int), counter);
+	else if (identifier == 's')
+		ft_putstr_pf(va_arg(args, char *), counter);
+	else if (identifier == 'i' || identifier == 'd')
+		ft_putnbr_pf(va_arg(args, int), counter);
+	else if (identifier == '%')
+		ft_putchar_pf('%', counter);
+	return (0);
 }
 
-int ft_putstr(const char *str)
+static int	ft_putformat(va_list args, const char *format)
 {
-	int i;
+	int		i;
+	int		counter;
 
 	i = 0;
-	while (str[i])
+	counter = 0;
+	while(format[i])
 	{
-		ft_putchar(str[i]);
+		if (format[i] == '%')
+			ft_putarg(args, format[++i], &counter);
+		else 
+			ft_putchar_pf(format[i], &counter);
 		i++;
 	}
-	return (i);
+	return (counter);
 }
 
 
-int ft_printf(const char *str, ...) 
+int ft_printf(const char *format, ...) 
 {
 	va_list	args;
-	int		i;
+
 	int		count;
-	char	*current;
 
-	va_start(args, str);
-	i = 0;
-	while(str[i])
-	{
-		if (str[i] == '%')
-		{
-			if (str[i + 1] == 's')
-			{
-				current = va_arg(args, char *);
-				count += ft_putstr(current);
-				i += 2;
-			}
-		}
-		ft_putchar(str[i]);
-		i++;
-		count++;
-	}
-
+	va_start(args, format);
+	count = ft_putformat(args, format);
 	va_end(args);
 	return (count);
 }
 
 int main(void)
 {
-	ft_printf("Hello %s %s World \n", "ABC", "DEF", 'C');
-	// printf("Hello World\n");
-	// printf("Len: %zu\n", ft_strlen("Hello World!!!"));
-	// printf("Sum function: %d\n", sum(4, 1, 2, 3, 4));
+	// ft_printf("Hello %s %s %d %% World \n", "ABC", "DEF", 42);
+	printf("COUNT M: %d\n\n", ft_printf("Hello %s %s %c %d %% World \n", "ABC", "DEF", 'X', 42));
+	printf("COUNT O: %d\n", printf("Hello %s %s %c %d %% World \n", "ABC", "DEF", 'X', 42));
 	return (0);
-}
-
-int sum(int count, ...)
-{
-	va_list args;
-	va_start(args, count);
-	int i;
-	int s = 0;
-	for (i = 0; i < count; i++)
-	{
-		int x = va_arg(args, int);
-		printf("I: %d, Count: %d, X: %d\n", i, count, x);
-		s += x;
-	}
-	va_end(args);
-	return (s);
 }

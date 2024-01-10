@@ -15,9 +15,10 @@ NAME = libftprintf.a
 CC = cc
 # CFLAGS = -Wall -Werror -Wextra -g3
 CFLAGS = -g3
-LIBFT = ./libft/libft.a
+LIBFT_DIR =	./libft
+LIBFT =	$(LIBFT_DIR)/libft.a
 AR = ar rcs
-SRC = libftprintf.c
+SRC = libftprintf.c ./utils/libftprintf_utils.c
 SRCS = $(SRC)
 OBJS = $(SRCS:.c=.o)
 EXECUTABLE = a.out
@@ -30,6 +31,9 @@ $(NAME): $(OBJS) $(LIBFT)
 
 $(EXECUTABLE): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $^ -o $@
+
+$(LIBFT):
+	@cd $(LIBFT_DIR) && make
 
 all: $(NAME) $(EXECUTABLE)
 
