@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   libftprintf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhomche <akhomche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ax <ax@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/04 10:25:09 by akhomche          #+#    #+#             */
-/*   Updated: 2023/11/04 12:08:07 by akhomche         ###   ########.fr       */
+/*   Created: 2024/01/04 16:50:28 by ax                #+#    #+#             */
+/*   Updated: 2024/01/07 20:24:33 by ax               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft_printf.h"
 
 static int	ft_intlen(long num)
 {
@@ -47,7 +47,8 @@ static void	ft_num_to_str(char *res, int is_negative, long num, int len)
 	res[i] = '\0';
 }
 
-char	*ft_itoa(int n)
+
+static char	*ft_uitoa(unsigned int n)
 {
 	char	*res;
 	int		len;
@@ -69,5 +70,21 @@ char	*ft_itoa(int n)
 		return (NULL);
 	ft_num_to_str(res, is_negative, num, len);
 	return (res);
+}
+
+
+void ft_putunbr_pf(unsigned int num, int *counter)
+{
+	int 	i;
+	char	*num_str;
+
+	num_str = ft_uitoa(num);
+	i = 0;
+	while (num_str[i])
+	{
+		ft_putchar_pf(num_str[i], counter);
+		i++;
+	}
+	free(num_str);
 }
 

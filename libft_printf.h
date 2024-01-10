@@ -19,8 +19,12 @@
 # include <unistd.h>
 
 int	    ft_printf(const char *format, ...);
+int	    check_if_double(char *base);
 void	ft_putchar_pf(char c, int *counter);
 void    ft_putstr_pf(const char *str, int *counter);
 void    ft_putnbr_pf(int num, int *counter);
+void    ft_putunbr_pf(unsigned int num, int *counter);
+void	ft_print_nbr(int n, int base_value, char *symbols, int *counter);
+void	ft_putnbr_base(int nbr, char *base, int *counter);
 
 #endif

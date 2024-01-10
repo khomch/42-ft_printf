@@ -12,37 +12,61 @@
 
 #include "../libft_printf.h"
 
-
-void	ft_putchar_pf(char c, int *counter)
+int	check_if_double(char *base)
 {
-	(*counter) += write(1, &c, 1);
-}
+	int	i;
+	int	j;
 
-void ft_putstr_pf(const char *str, int *counter)
-{
-	int i;
-
-	if (!str)
-		str = "(null)";
 	i = 0;
-	while (str[i])
+	while (base[i])
 	{
-		ft_putchar_pf(str[i], counter);
+		j = 1;
+		while (base[i + j])
+		{
+			if (base[i] == base[i + j])
+			{
+				return (1);
+			}
+			j++;
+		}
 		i++;
 	}
+	return (0);
 }
 
-void ft_putnbr_pf(int num, int *counter)
+void	ft_print_nbr(int n, int base_value, char *symbols, int *counter)
 {
-	int 	i;
-	char	*num_str;
+	long	nl;
 
-	num_str = ft_itoa(num);
-	i = 0;
-	while (num_str[i])
+	nl = n;
+	if (nl < 0)
 	{
-		ft_putchar_pf(num_str[i], counter);
-		i++;
+		nl = -nl;
+		ft_putchar_pf('-', counter);
 	}
-	free(num_str);
+	if (nl >= base_value)
+	{
+		ft_print_nbr(nl / base_value, base_value, symbols, counter);
+	}
+	ft_putchar_pf(symbols[nl % base_value], counter);
+}
+
+void	ft_putnbr_base(int nbr, char *base, int *counter)
+{
+	int	base_value;
+
+	base_value = 0;
+	while (base[base_value])
+	{	
+		if (base[base_value] == '-' || base[base_value] == '+')
+		{
+			return ;
+		}
+		base_value++;
+	}
+	if (base_value < 2)
+		return ;
+	if (check_if_double(base))
+		return ;
+	ft_print_nbr(nbr, base_value, base, counter);
 }
