@@ -12,42 +12,39 @@
 
 #include "../libft_printf.h"
 
-static void	ft_hexlen(unsigned int input_number,int *counter)
+static void	ft_pointerlen(uintptr_t pointer, int *counter)
 {
-	while (input_number != 0)
+	while (pointer != 0)
 	{
-		input_number = input_number / 16;
+		pointer = pointer / 16;
 		(*counter)++;
 	}
 }
 
-static void	ft_print_hexadecimal(unsigned int input_number, const char format)
+void	ft_printpointer(uintptr_t pointer)
 {
-	if (input_number >= 16)
+	if (pointer >= 16)
 	{
-		ft_print_hexadecimal(input_number / 16, format);
-		ft_print_hexadecimal(input_number % 16, format);
+		ft_printpointer(pointer / 16);
+		ft_printpointer(pointer % 16);
 	}
 	else
 	{
-		if (input_number <= 9)
-			ft_putchar_fd((input_number + '0'), 1);
+		if (pointer < 10)
+			ft_putchar_fd((pointer + '0'), 1);
 		else
-		{
-			if (format == 'x')
-				ft_putchar_fd((input_number - 10 + 'a'), 1);
-			if (format == 'X')
-				ft_putchar_fd((input_number - 10 + 'A'), 1);
-		}
+			ft_putchar_fd((pointer - 10 + 'a'), 1);
 	}
 }
 
-void	ft_puthexadecimal(unsigned int input_number,
-				const char format, int *counter)
+void	ft_putpointer(unsigned long long address, int *counter)
 {
-	if (input_number == 0)
-		(*counter) += write(1, "0", 1);
+	if (address == 0)
+		(*counter) += write(1, "(nil)", 5);
 	else
-		ft_print_hexadecimal(input_number, format);
-	ft_hexlen(input_number, counter);
+	{
+		(*counter) += write(1, "0x", 2);
+		ft_printpointer(address);
+		ft_pointerlen(address, counter);
+	}
 }

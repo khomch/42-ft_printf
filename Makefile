@@ -18,7 +18,7 @@ CFLAGS = -g3
 LIBFT_DIR =	./libft
 LIBFT =	$(LIBFT_DIR)/libft.a
 AR = ar rcs
-SRC = libftprintf.c ./utils/libftprintf_utils.c ./utils/libftprintf_uint.c ./utils/libftprintf_hexadecimal.c
+SRC = libftprintf.c ./utils/libftprintf_utils.c ./utils/libftprintf_uint.c ./utils/libftprintf_hexadecimal.c ./utils/libftprintf_pointer.c
 SRCS = $(SRC)
 OBJS = $(SRCS:.c=.o)
 EXECUTABLE = a.out
