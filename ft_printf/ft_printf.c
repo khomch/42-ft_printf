@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_printf.h"
+#include "ft_printf.h"
 
 static int	ft_putarg(va_list args, char identifier, int *counter)
 {
@@ -62,22 +62,21 @@ int ft_printf(const char *format, ...)
 	return (count);
 }
 
-int main(void)
-{
-	// ft_printf("Hello %s %s %d %% World \n", "ABC", "DEF", 42);
-	int num;
+// int main(void)
+// {
+// 	// ft_printf("Hello %s %s %d %% World \n", "ABC", "DEF", 42);
+// 	int num;
 
-	num = 42;
+// 	num = 42;
 
-	int n; 
-	// printf("&n = %p\n", (void*)&n);
+// 	// printf("&n = %p\n", (void*)&n);
 
-	printf("\nPointer: %p \n\n", &num);
-	ft_printf("\nPointer: %p \n\n", &num);
-	// printf("%s \n", NULL);
-	// ft_printf("%s \n", NULL);
-	// printf("COUNT M: %d\n\n", ft_printf("Hello %s %s %c %d %% %x %X %u %s World \n", "ABC", "DEF", 'X', 42, 42, 42, 4294967295, ""));
-	// printf("COUNT O: %d\n", printf("Hello %s %s %c %d %% %x %X %u %s World \n", "ABC", "DEF", 'X', 42, 42, 42, 4294967295, ""));
-	return (0);
-}
+// 	printf("\nPointer: %p \n\n", &num);
+// 	ft_printf("\nPointer: %p \n\n", &num);
+// 	// printf("%s \n", NULL);
+// 	// ft_printf("%s \n", NULL);
+// 	// printf("COUNT M: %d\n\n", ft_printf("Hello %s %s %c %d %% %x %X %u %s World \n", "ABC", "DEF", 'X', 42, 42, 42, 4294967295, ""));
+// 	// printf("COUNT O: %d\n", printf("Hello %s %s %c %d %% %x %X %u %s World \n", "ABC", "DEF", 'X', 42, 42, 42, 4294967295, ""));
+// 	return (0);
+// }
 

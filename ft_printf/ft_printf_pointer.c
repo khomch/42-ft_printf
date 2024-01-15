@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft_printf.h"
+#include "ft_printf.h"
 
 static void	ft_pointerlen(uintptr_t pointer, int *counter)
 {

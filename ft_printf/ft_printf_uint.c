@@ -10,44 +10,75 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft_printf.h"
+#include "ft_printf.h"
 
-static void	ft_hexlen(unsigned int input_number,int *counter)
+static int	ft_intlen(long num)
 {
-	while (input_number != 0)
+	int		len;
+
+	len = 0;
+	if (num == 0)
+		len = 1;
+	while (num > 0)
 	{
-		input_number = input_number / 16;
-		(*counter)++;
+		num = num / 10;
+		len++;
 	}
+	return (len);
 }
 
-static void	ft_print_hexadecimal(unsigned int input_number, const char format)
+static void	ft_num_to_str(char *res, int is_negative, long num, int len)
 {
-	if (input_number >= 16)
+	int	i;
+
+	i = 0;
+	while (len--)
 	{
-		ft_print_hexadecimal(input_number / 16, format);
-		ft_print_hexadecimal(input_number % 16, format);
-	}
-	else
-	{
-		if (input_number <= 9)
-			ft_putchar_fd((input_number + '0'), 1);
-		else
+		if (is_negative && len == 0)
 		{
-			if (format == 'x')
-				ft_putchar_fd((input_number - 10 + 'a'), 1);
-			if (format == 'X')
-				ft_putchar_fd((input_number - 10 + 'A'), 1);
+			res[len] = '-';
+			i++;
+			break ;
 		}
+		res[len] = num % 10 + '0';
+		num = num / 10;
+		i++;
 	}
+	res[i] = '\0';
 }
 
-void	ft_puthexadecimal(unsigned int input_number,
-				const char format, int *counter)
+
+static char	*ft_uitoa(unsigned int n)
 {
-	if (input_number == 0)
-		(*counter) += write(1, "0", 1);
-	else
-		ft_print_hexadecimal(input_number, format);
-	ft_hexlen(input_number, counter);
+	char	*res;
+	int		len;
+	long	num;
+	int		is_negative;
+
+	len = 0;
+	num = n;
+	is_negative = 0;
+	len += ft_intlen(num);
+	res = (char *)malloc(sizeof(char) * (len + 1));
+	if (!res)
+		return (NULL);
+	ft_num_to_str(res, is_negative, num, len);
+	return (res);
 }
+
+
+void ft_putunbr_pf(unsigned int num, int *counter)
+{
+	int 	i;
+	char	*num_str;
+
+	num_str = ft_uitoa(num);
+	i = 0;
+	while (num_str[i])
+	{
+		ft_putchar_pf(num_str[i], counter);
+		i++;
+	}
+	free(num_str);
+}
+

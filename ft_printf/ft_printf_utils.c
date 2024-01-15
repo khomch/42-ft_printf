@@ -10,75 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft_printf.h"
+#include "ft_printf.h"
 
-static int	ft_intlen(long num)
+
+void	ft_putchar_pf(char c, int *counter)
 {
-	int		len;
-
-	len = 0;
-	if (num == 0)
-		len = 1;
-	while (num > 0)
-	{
-		num = num / 10;
-		len++;
-	}
-	return (len);
+	(*counter) += write(1, &c, 1);
 }
 
-static void	ft_num_to_str(char *res, int is_negative, long num, int len)
+void ft_putstr_pf(const char *str, int *counter)
 {
-	int	i;
+	int i;
 
+	if (!str)
+		str = "(null)";
 	i = 0;
-	while (len--)
+	while (str[i])
 	{
-		if (is_negative && len == 0)
-		{
-			res[len] = '-';
-			i++;
-			break ;
-		}
-		res[len] = num % 10 + '0';
-		num = num / 10;
+		ft_putchar_pf(str[i], counter);
 		i++;
 	}
-	res[i] = '\0';
 }
 
-
-static char	*ft_uitoa(unsigned int n)
-{
-	char	*res;
-	int		len;
-	long	num;
-	int		is_negative;
-
-	len = 0;
-	num = n;
-	is_negative = 0;
-	if (n < 0)
-	{
-		is_negative = 1;
-		num = -num;
-		len++;
-	}
-	len += ft_intlen(num);
-	res = (char *)malloc(sizeof(char) * (len + 1));
-	if (!res)
-		return (NULL);
-	ft_num_to_str(res, is_negative, num, len);
-	return (res);
-}
-
-
-void ft_putunbr_pf(unsigned int num, int *counter)
+void ft_putnbr_pf(int num, int *counter)
 {
 	int 	i;
 	char	*num_str;
 
-	num_str = ft_uitoa(num);
+	num_str = ft_itoa(num);
 	i = 0;
 	while (num_str[i])
 	{
@@ -87,4 +46,3 @@ void ft_putunbr_pf(unsigned int num, int *counter)
 	}
 	free(num_str);
 }
-

@@ -10,39 +10,44 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft_printf.h"
+#include "ft_printf.h"
 
-
-void	ft_putchar_pf(char c, int *counter)
+static void	ft_hexlen(unsigned int input_number,int *counter)
 {
-	(*counter) += write(1, &c, 1);
-}
-
-void ft_putstr_pf(const char *str, int *counter)
-{
-	int i;
-
-	if (!str)
-		str = "(null)";
-	i = 0;
-	while (str[i])
+	while (input_number != 0)
 	{
-		ft_putchar_pf(str[i], counter);
-		i++;
+		input_number = input_number / 16;
+		(*counter)++;
 	}
 }
 
-void ft_putnbr_pf(int num, int *counter)
+static void	ft_print_hexadecimal(unsigned int input_number, const char format)
 {
-	int 	i;
-	char	*num_str;
-
-	num_str = ft_itoa(num);
-	i = 0;
-	while (num_str[i])
+	if (input_number >= 16)
 	{
-		ft_putchar_pf(num_str[i], counter);
-		i++;
+		ft_print_hexadecimal(input_number / 16, format);
+		ft_print_hexadecimal(input_number % 16, format);
 	}
-	free(num_str);
+	else
+	{
+		if (input_number <= 9)
+			ft_putchar_fd((input_number + '0'), 1);
+		else
+		{
+			if (format == 'x')
+				ft_putchar_fd((input_number - 10 + 'a'), 1);
+			if (format == 'X')
+				ft_putchar_fd((input_number - 10 + 'A'), 1);
+		}
+	}
+}
+
+void	ft_puthexadecimal(unsigned int input_number,
+				const char format, int *counter)
+{
+	if (input_number == 0)
+		(*counter) += write(1, "0", 1);
+	else
+		ft_print_hexadecimal(input_number, format);
+	ft_hexlen(input_number, counter);
 }
